@@ -6,6 +6,9 @@
   height: 40vmin;
   pointer-events: none;
 }
+.mindImg{
+  width: 100px;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -35,4 +38,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.filterBox{
+  background: #f7f5f2 !important;
+}
+
+[type="radio"]:checked+label:after {
+  background-color: red !important;
+  border: 2px solid red;
 }

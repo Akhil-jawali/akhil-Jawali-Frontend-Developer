@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from "react";
+import BodyPart from "./components/BodyPart";
+import HeaderPart from "./components/HeaderPart";
+import Mind from "./components/Mind";
+import FilterPart from "./components/FilterPart";
 
-function App() {
+
+const App = () => {
+  const [selectedArea, setSelectedArea] = useState('indian');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <HeaderPart />
+      <Mind />
+      <FilterPart selectedArea={selectedArea} setSelectedArea={setSelectedArea} />
+      <BodyPart selectedArea={selectedArea} />
+      {/* <Footer /> */}
     </div>
   );
-}
+};
 
 export default App;
