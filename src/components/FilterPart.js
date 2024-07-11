@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InnerFilter from "./InnerFilter";
 import Modal from "react-modal";
+
 const FilterPart = ({ setSelectedArea }) => {
   const customStyles = {
     content: {
@@ -10,7 +11,6 @@ const FilterPart = ({ setSelectedArea }) => {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      // backgroundColor: "black",
       padding: "0px",
       borderRadius: "10px",
       border: "2px solid #ccc",
@@ -22,31 +22,14 @@ const FilterPart = ({ setSelectedArea }) => {
     },
   };
 
-  function showDifferentFilter(id1, id2, id3, id4, id5) {
-    if (id1 == "area") {
-      document.getElementById(id2).classList.remove('bg-orange-500', 'text-white');
-      document.getElementById(id3).classList.remove('bg-orange-500', 'text-white');
-      document.getElementById(id4).classList.remove('bg-orange-500', 'text-white');
-      document.getElementById(id5).classList.remove('bg-orange-500', 'text-white');
-      document.getElementById(id1).classList.add("text-white", "bg-orange-500");
-      document.getElementById("displayNothing").classList.add("hidden");
-      document.getElementById("displayLocations").classList.remove("hidden");
-    } else {
-      document.getElementById(id2).classList.remove('bg-orange-500', 'text-white');
-      document.getElementById(id3).classList.remove('bg-orange-500', 'text-white');
-      document.getElementById(id4).classList.remove('bg-orange-500', 'text-white');
-      document.getElementById(id5).classList.remove('bg-orange-500', 'text-white');
-      document.getElementById(id1).classList.add("bg-orange-500", "text-white");
-      document.getElementById("displayLocations").classList.add("hidden");
-      document.getElementById("displayNothing").classList.remove("hidden");
-    }
-  }
+  const [selectedArea, setSelectedAreaState] = useState("indian");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const handleAreaChange = (event) => {
-    setSelectedArea(event.target.value);
+    const area = event.target.value;
+    setSelectedAreaState(area);
+    setSelectedArea(area); // Assuming this is a prop function to set the selected area in a parent component
   };
-
-  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -54,6 +37,26 @@ const FilterPart = ({ setSelectedArea }) => {
 
   const closeModal = () => {
     setModalIsOpen(false);
+  };
+
+  const showDifferentFilter = (id1, id2, id3, id4, id5) => {
+    if (id1 === "area") {
+      document.getElementById(id2).classList.remove("bg-orange-500", "text-white");
+      document.getElementById(id3).classList.remove("bg-orange-500", "text-white");
+      document.getElementById(id4).classList.remove("bg-orange-500", "text-white");
+      document.getElementById(id5).classList.remove("bg-orange-500", "text-white");
+      document.getElementById(id1).classList.add("text-white", "bg-orange-500");
+      document.getElementById("displayNothing").classList.add("hidden");
+      document.getElementById("displayLocations").classList.remove("hidden");
+    } else {
+      document.getElementById(id2).classList.remove("bg-orange-500", "text-white");
+      document.getElementById(id3).classList.remove("bg-orange-500", "text-white");
+      document.getElementById(id4).classList.remove("bg-orange-500", "text-white");
+      document.getElementById(id5).classList.remove("bg-orange-500", "text-white");
+      document.getElementById(id1).classList.add("bg-orange-500", "text-white");
+      document.getElementById("displayLocations").classList.add("hidden");
+      document.getElementById("displayNothing").classList.remove("hidden");
+    }
   };
 
   return (
@@ -100,34 +103,34 @@ const FilterPart = ({ setSelectedArea }) => {
                     <div
                       className="bg-orange-500 border-b border-r border-t text-white inActive flex justify-center"
                       id="area"
-                      onClick={() => showDifferentFilter("area",'rating', 'veg', 'offer', 'price')}
+                      onClick={() => showDifferentFilter("area", "rating", "veg", "offer", "price")}
                     >
                       <span className="py-2 md:text-lg text-sm font-normal">
                         Area
                       </span>
                     </div>
                     <div
-                      className=" border-b border-r inActive flex justify-center"
+                      className="border-b border-r inActive flex justify-center"
                       id="rating"
-                      onClick={() => showDifferentFilter("rating",'area', 'veg', 'offer', 'price')}
+                      onClick={() => showDifferentFilter("rating", "area", "veg", "offer", "price")}
                     >
                       <span className="py-2 md:text-lg text-sm font-normal">
                         Rating
                       </span>
                     </div>
                     <div
-                      className=" border-b border-r inActive flex justify-center"
+                      className="border-b border-r inActive flex justify-center"
                       id="veg"
-                      onClick={() => showDifferentFilter("veg",'area', 'rating', 'offer', 'price')}
+                      onClick={() => showDifferentFilter("veg", "area", "rating", "offer", "price")}
                     >
                       <span className="py-2 md:text-lg text-sm font-normal">
                         Veg/Non-Veg
                       </span>
                     </div>
                     <div
-                      className=" border-b border-r inActive flex justify-center"
+                      className="border-b border-r inActive flex justify-center"
                       id="offer"
-                      onClick={() => showDifferentFilter("offer",'area', 'rating', 'veg', 'price')}
+                      onClick={() => showDifferentFilter("offer", "area", "rating", "veg", "price")}
                     >
                       <span className="py-2 md:text-lg text-sm font-normal">
                         Offers
@@ -136,7 +139,7 @@ const FilterPart = ({ setSelectedArea }) => {
                     <div
                       className="border-r flex inActive justify-center"
                       id="price"
-                      onClick={() => showDifferentFilter("price",'area', 'rating', 'veg', 'offer')}
+                      onClick={() => showDifferentFilter("price", "area", "rating", "veg", "offer")}
                     >
                       <span className="py-2 md:text-lg text-sm font-normal">
                         Pricing
@@ -157,7 +160,7 @@ const FilterPart = ({ setSelectedArea }) => {
                           value="indian"
                           className="areaName"
                           id="india"
-                          defaultChecked
+                          checked={selectedArea === "indian"}
                           name="area"
                         />
                         <label
@@ -174,6 +177,7 @@ const FilterPart = ({ setSelectedArea }) => {
                           value="chinese"
                           className="areaName"
                           id="china"
+                          checked={selectedArea === "chinese"}
                           name="area"
                         />
                         <label
@@ -190,6 +194,7 @@ const FilterPart = ({ setSelectedArea }) => {
                           value="american"
                           className="areaName"
                           id="america"
+                          checked={selectedArea === "american"}
                           name="area"
                         />
                         <label
